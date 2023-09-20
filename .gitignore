@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+*.Rproj
+_targets/
+data_derived/
+data_provided/
+manuscript/
+literature/
+presentations/

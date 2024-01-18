@@ -9,8 +9,8 @@ tar_option_set(
     )
 )
 
-# Load config.yaml
-config <- yaml::read_yaml("config.yaml")
+# Load config settings
+config <-source("config.R")
 
 list(
 #### INSERT YOUR RTARGETS_PREP_TOOL RESULT HERE ####

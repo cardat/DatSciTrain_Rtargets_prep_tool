@@ -10,8 +10,13 @@ tar_option_set(
 )
 
 # Load config settings
-config <-source("config.R")
+source("config.R")
 
 list(
 #### INSERT YOUR RTARGETS_PREP_TOOL RESULT HERE ####
+# or just
+  tar_target(
+    test,
+    print(test_text_to_print)
+  )
 )

@@ -1,2 +1,2 @@
 # config settings like
-my_name <- "my name"
+test_text_to_print <- "hello world"

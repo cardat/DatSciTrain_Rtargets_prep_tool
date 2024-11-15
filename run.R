@@ -12,6 +12,7 @@ tar_make()
 
 # # useful tools
 # tar_meta(fields = error, complete_only = TRUE)
+# tar_outdated()
 # tar_invalidate()
 # tar_objects()
 # tar_load_everything()

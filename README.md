@@ -1,13 +1,10 @@
 ---
 output:
   html_document: default
-  pdf_document: default
 ---
 # DatSciTrain_Rtargets_prep_tool
 
 Anh Han
-
-20250807
 
 ------------------------------------------------------------------------
 
@@ -27,7 +24,7 @@ This tool was developed to:
 
 -   Integrate with **version control** for track changes and collaborative development.
 
-## Structure of this tool
+## Contents
 
 The repository contains the following core components:
 
@@ -40,25 +37,32 @@ Rtargets_prep_tool/
 ├── R/                           # Folder where utility functions are generated
 ├── load_packages.R              # Script for loading required R packages
 ```
-### File descriptions
-`Rtarget_prep_tool.xlsx`: a primary  interface for designing your analysis pipeline. Fill in target names, data inputs and logic. The tool generates:
 
-- Column D -> code snippets for `_targets.R`
+## How to use
+1. Download or clone this repository by clicking the green `<> Code` button at the top right of this Github repository file listing. You will need to create your R working folder and rename the folder and `.Rproj` file as needed.
 
-- Column E -> function scaffolds to be placed in `R/`
+2. Launch `Rtergats_prep_tool.xlsx` and enter each pipeline step in the yellow-highlighted rows. Use the `verb_noun` naming convention (e.g., `load_ap_monitors`) and specify any required input files or upstream targets.
 
-`_targets.R`: insert your list of targets here. Place generated blocks between `list(...)`.
+``` text
+Column D: Generates target code snippets for _targets.R
 
-`run.R`: use this to 
+Column E: Creates utility functions in the R/ folder 
+```
 
-- run the pipeline with `tar_make()`
+3. Paste the content from **Column D** into `_targets.R`, inside the `list(...)` block. Then copy and run the code from **Column E** in the R console to generate `.R` files inside the `R/` folder. Each `.R` file corresponds to one pipeline step and will contain a scaffolded function ready for you to fill in.
 
-- load and inspect outputs interactively
+4. To implement the logic inside  each function, open each generated `.R` file in the `R/` folder and fill in your data processing or analysis logic. Remember to use proper `return()` statements to return objects, passing through the pipe.
 
-- generate pipeline visualisation with `tar_visnetwork()`
+> NOTE: if you are woking with spatial objects (like `terra` and `sf`), wrap the object with `return(wrap(spatial_object))` and unwrap in the downstream function: `spatial_object <- unwrap(name_of_previous_target)`.
 
-`config.R`: declare and manage key variables and file paths (i.e. data directories). This keeps the `_targets.R` script clean and makes it easier to manage environmental variables.
+5. Run and inspect the pipeline by using `run.R` as your main control script. It typically includes `source(run.R)`. Inside `run.R`, you can run the pipeline with `tar_make()`, load targets with `tar_load("target_name")`, and visualise dependencies with `tar_visnetwork()`. 
 
-`R/` folder: automatically populated with one `.R` file per utility function. You fill in the logic.
+> Remember to update `config.R` with file paths or constants. You can also use `load_packages.R` to load required libraries in interactive sessions.
 
-`load_packages.R`: load required packages for the analysis.
+6. Revisit the Excel file to add or modify targets and use Git to track and version updates made to `_targets.R`, `R/`, and `config.R`.
+
+## Example application: GIS analysis of air pollution monitor coverage
+An example of this tool is demonstrated in the project [DatSci_ap_monitors_and_postcodes](https://github.com/cardat/DatSci_ap_monitors_and_postcodes), which use buffer analysis around monitoring stations and spatial joins with postcode boundaries. 
+
+Training sessions applying the `Rtarget_prep_tool` for this analysis are documented in the [transcript](https://github.com/cardat/DatSci_ap_monitors_and_postcodes/blob/main/working_anh/transcript.pdf).
+
